@@ -1,5 +1,4 @@
 let questions = [];
-let btnReset = document.getElementById('reset');
 
 questions.push(
     {
@@ -62,6 +61,3 @@ questions.push(
         correct_ans: 3
     }
 );
-
-
-
