@@ -1,16 +1,15 @@
-let form = document.getElementById('form');
-let results = document.getElementById('results');
+let quiz = document.getElementById('quiz');
+let form = document.getElementById('form')
 let btnReset = document.getElementById('reset');
 let btnCheck = document.getElementById('answers');
 
-
 function shuffle(arr) {
     let i = arr.length;
-    let newI = undefined;
+    let new_i = undefined;
     while (i != 0) {
-        newI = Math.floor(Math.random()*i);
+        new_i = Math.floor(Math.random()*i);
         i--;
-        [arr[i], arr[newI]] = [arr[newI], arr[i]];
+        [arr[i], arr[new_i]] = [arr[new_i], arr[i]];
     }
     return arr;
 }
@@ -20,47 +19,64 @@ btnReset.addEventListener('click', () => {
     location.reload();
 });
 
-let fiveQn = [];
+let qns = [];
 for(let i=0; i<5; i++) {
+    qns.push(questions[i]);
+}
+
+qns.forEach((qns, i) => {
     let qn = document.createElement('div');
-    form.append(qn);
     let qnNo = document.createElement('p');
-    qnNo.textContent = (`${i+1}. ${questions[i].qn}`);
+    qnNo.textContent = (`${i+1}. ${qns.qn}`);
+    qn.classList.add('qn');
+    
+    form.append(qn);
     qn.append(qnNo);
 
-    questions[i].ans.forEach((ans, j) => {
+    qns.ans.forEach((ans, j) => {
         let input = document.createElement('input');
+        let label = document.createElement('label');
+        label.innerHTML = ans;
+
         input.type = 'radio';
         input.value = j;
         input.name = `possibleAns${i}`;
-        input.classList.add = 'input';
-        let label = document.createElement('label');
-        label.innerHTML = ans;
+    
+        if(j == 0) {
+            input.checked = true;
+        }
+
         qn.append(input, label);
     });
-    fiveQn.push(questions[i]);
-}
+
+});
 
 btnCheck.addEventListener('click', () => {
-    fiveQn.forEach((e, i) => {
-        let answer = document.querySelector(`input[name="possibleAns${i}"]:checked`).value;
+    let rsl = document.createElement('div');
+    rsl.id = 'results';
+    quiz.append(rsl);
 
-        if(answer == e.correct_ans) {
+    qns.forEach((el, i) => {
+        let answer = document.querySelector(`input[type="radio"]:checked`).value;
+        
+        if(answer == el.correct_ans) {
             let ans = document.createElement('p');
             ans.textContent = `Correct answer number ${i+1}.`;
-            ans.style.color = 'green';
-            results.append(ans);
+            ans.classList.add('correct');
+            rsl.append(ans);
         }
         else {
             let ans = document.createElement('p');
             ans.textContent = `Wrong answer number ${i+1}.`;
-            ans.style.color = 'red';
-            results.append(ans);
+            ans.classList.add('error');
+            rsl.append(ans);
         }
     });
+
     let disabled = document.querySelectorAll(`input[type="radio"]`);
     disabled.forEach((el) => {
         el.disabled = true;
     });
-    btnCheck.disabled;
+
+    btnCheck.disabled = true;
 });
