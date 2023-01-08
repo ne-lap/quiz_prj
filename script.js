@@ -53,7 +53,7 @@ qns.forEach((qns, i) => {
 
 btnCheck.addEventListener('click', () => {
     let rsl = document.createElement('div');
-    rsl.id = 'results';
+    rsl.setAttribute('id', 'results');
     quiz.append(rsl);
 
     qns.forEach((el, i) => {
@@ -61,13 +61,13 @@ btnCheck.addEventListener('click', () => {
         
         if(answer == el.correct_ans) {
             let ans = document.createElement('p');
-            ans.textContent = `Correct answer number ${i+1}.`;
+            ans.textContent = `Correct answer for question number ${i+1}.`;
             ans.classList.add('correct');
             rsl.append(ans);
         }
         else {
             let ans = document.createElement('p');
-            ans.textContent = `Wrong answer number ${i+1}.`;
+            ans.textContent = `Wrong answer for question number ${i+1}.`;
             ans.classList.add('error');
             rsl.append(ans);
         }
