@@ -57,8 +57,7 @@ btnCheck.addEventListener('click', () => {
     quiz.append(rsl);
 
     qns.forEach((el, i) => {
-        let answer = document.querySelector(`input[type="radio"]:checked`).value;
-        
+        let answer = document.querySelector(`input[name='possibleAns${i}']:checked`).value;
         if(answer == el.correct_ans) {
             let ans = document.createElement('p');
             ans.textContent = `Correct answer for question number ${i+1}.`;
